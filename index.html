@@ -43,8 +43,27 @@
             70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
             100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
-        .view { display: none; }
-        .view.active { display: block; }
+        .view {
+            transition: opacity 0.4s ease-in-out;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .view:not(.active) {
+            opacity: 0;
+            visibility: hidden;
+            display: none;
+        }
+        .view.active {
+            opacity: 1;
+            visibility: visible;
+            display: block;
+            position: relative;
+        }
+        #view-container {
+            position: relative;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -67,7 +86,8 @@
             </div>
         </nav>
     </header>
-
+    
+    <div id="view-container">
     <!-- VISTA PRINCIPAL -->
     <div id="main-view" class="view active">
         <main>
@@ -81,15 +101,16 @@
 
             <section id="policies" class="py-20 bg-gray-50">
                 <div class="container mx-auto px-6">
-                    <h2 class="text-3xl font-bold text-center mb-12">Nuestras Pólizas de Vida</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Tarjetas de Pólizas -->
+                    <!-- SEGUROS DE VIDA -->
+                    <h2 id="life-policies-section" class="text-3xl font-bold text-center mb-4">Nuestros Seguros de Vida</h2>
+                    <p class="text-center text-gray-600 mb-12">Protección para ti y los que más quieres en cada etapa de la vida.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div id="policy-family-card" class="policy-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent flex flex-col">
                             <img src="https://placehold.co/600x400/3b82f6/ffffff?text=Familia" class="w-full h-48 object-cover">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-bold mb-2 text-blue-800">Póliza Familiar Integral</h3>
-                                <p class="text-gray-600 mb-4">Protección completa para ti y tus seres queridos.</p>
-                                <p class="text-2xl font-bold text-gray-900 mb-4 mt-auto">Desde $45/mes</p>
+                                <p class="text-gray-600 mb-4 flex-grow">Protección completa para ti y tus seres queridos.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $45/mes</p>
                                 <a href="#" class="font-semibold text-blue-600 hover:underline view-details-link" data-policy-id="policy-family">Ver más detalles &rarr;</a>
                             </div>
                         </div>
@@ -97,8 +118,8 @@
                             <img src="https://placehold.co/600x400/10b981/ffffff?text=Individual" class="w-full h-48 object-cover">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-bold mb-2 text-green-800">Póliza Individual Futuro</h3>
-                                <p class="text-gray-600 mb-4">Ideal para jóvenes y solteros que invierten en su futuro.</p>
-                                <p class="text-2xl font-bold text-gray-900 mb-4 mt-auto">Desde $25/mes</p>
+                                <p class="text-gray-600 mb-4 flex-grow">Ideal para jóvenes y solteros que invierten en su futuro.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $25/mes</p>
                                 <a href="#" class="font-semibold text-green-600 hover:underline view-details-link" data-policy-id="policy-individual">Ver más detalles &rarr;</a>
                             </div>
                         </div>
@@ -106,8 +127,8 @@
                             <img src="https://placehold.co/600x400/8b5cf6/ffffff?text=Legado" class="w-full h-48 object-cover">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-bold mb-2 text-purple-800">Póliza Legado Dorado</h3>
-                                <p class="text-gray-600 mb-4">Asegura tu legado y protege a tu familia de cargas financieras.</p>
-                                <p class="text-2xl font-bold text-gray-900 mb-4 mt-auto">Desde $60/mes</p>
+                                <p class="text-gray-600 mb-4 flex-grow">Asegura tu legado y protege a tu familia de cargas financieras.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $60/mes</p>
                                 <a href="#" class="font-semibold text-purple-600 hover:underline view-details-link" data-policy-id="policy-senior">Ver más detalles &rarr;</a>
                             </div>
                         </div>
@@ -115,17 +136,50 @@
                             <img src="https://placehold.co/600x400/f59e0b/ffffff?text=Inversión" class="w-full h-48 object-cover">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-bold mb-2 text-amber-800">Póliza Inversión Plus</h3>
-                                <p class="text-gray-600 mb-4">Haz crecer tu dinero mientras te proteges.</p>
-                                <p class="text-2xl font-bold text-gray-900 mb-4 mt-auto">Desde $100/mes</p>
+                                <p class="text-gray-600 mb-4 flex-grow">Haz crecer tu dinero mientras te proteges.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $100/mes</p>
                                 <a href="#" class="font-semibold text-amber-600 hover:underline view-details-link" data-policy-id="policy-investment">Ver más detalles &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- SEGUROS DE AUTO -->
+                    <h2 id="auto-policies-section" class="text-3xl font-bold text-center mt-20 mb-4">Nuestros Seguros de Auto</h2>
+                    <p class="text-center text-gray-600 mb-12">Conduce con la tranquilidad de estar siempre respaldado.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                         <div id="policy-auto-civil-card" class="policy-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent flex flex-col">
+                            <img src="https://placehold.co/600x400/64748b/ffffff?text=RC" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold mb-2 text-slate-800">Seguro RC Básico</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">La cobertura esencial para cumplir con la ley y proteger a terceros.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $15/mes</p>
+                                <a href="#" class="font-semibold text-slate-600 hover:underline view-details-link" data-policy-id="policy-auto-civil">Ver más detalles &rarr;</a>
+                            </div>
+                        </div>
+                        <div id="policy-auto-limited-card" class="policy-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent flex flex-col">
+                            <img src="https://placehold.co/600x400/0ea5e9/ffffff?text=Limitada" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold mb-2 text-sky-800">Cobertura Limitada</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Protección contra robo y daños a terceros. El equilibrio perfecto.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $28/mes</p>
+                                <a href="#" class="font-semibold text-sky-600 hover:underline view-details-link" data-policy-id="policy-auto-limited">Ver más detalles &rarr;</a>
+                            </div>
+                        </div>
+                        <div id="policy-auto-full-card" class="policy-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent flex flex-col">
+                            <img src="https://placehold.co/600x400/22c55e/ffffff?text=Amplia" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold mb-2 text-green-800">Cobertura Amplia</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">La máxima tranquilidad. Cubre daños a tu auto, robo y más.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $50/mes</p>
+                                <a href="#" class="font-semibold text-green-600 hover:underline view-details-link" data-policy-id="policy-auto-full">Ver más detalles &rarr;</a>
                             </div>
                         </div>
                          <div id="policy-critical-card" class="policy-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent flex flex-col">
                             <img src="https://placehold.co/600x400/ef4444/ffffff?text=Salud" class="w-full h-48 object-cover">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-bold mb-2 text-red-800">Póliza Cobertura Crítica</h3>
-                                <p class="text-gray-600 mb-4">Apoyo económico ante un diagnóstico difícil.</p>
-                                <p class="text-2xl font-bold text-gray-900 mb-4 mt-auto">Desde $35/mes</p>
+                                <p class="text-gray-600 mb-4 flex-grow">Apoyo económico ante un diagnóstico difícil.</p>
+                                <p class="text-xl font-bold text-gray-900 mb-4 mt-auto">Desde $35/mes</p>
                                 <a href="#" class="font-semibold text-red-600 hover:underline view-details-link" data-policy-id="policy-critical">Ver más detalles &rarr;</a>
                             </div>
                         </div>
@@ -154,9 +208,8 @@
                 </ul>
             </div>
         </div>
-        <div class="mt-12 flex space-x-4">
-            <button class="add-to-cart-btn bg-blue-100 text-blue-800 font-semibold py-3 px-6 rounded-lg hover:bg-blue-200 transition" data-policy-id="policy-family">Agregar al Carrito</button>
-            <button class="buy-now-btn bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition" data-policy-id="policy-family">Comprar Ahora</button>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition" data-policy-id="policy-family">Agregar al Carrito</button>
         </div>
     </div>
     
@@ -178,9 +231,8 @@
                 </ul>
             </div>
         </div>
-        <div class="mt-12 flex space-x-4">
-            <button class="add-to-cart-btn bg-green-100 text-green-800 font-semibold py-3 px-6 rounded-lg hover:bg-green-200 transition" data-policy-id="policy-individual">Agregar al Carrito</button>
-            <button class="buy-now-btn bg-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-700 transition" data-policy-id="policy-individual">Comprar Ahora</button>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-green-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-green-700 transition" data-policy-id="policy-individual">Agregar al Carrito</button>
         </div>
     </div>
 
@@ -202,9 +254,8 @@
                 </ul>
             </div>
         </div>
-        <div class="mt-12 flex space-x-4">
-            <button class="add-to-cart-btn bg-purple-100 text-purple-800 font-semibold py-3 px-6 rounded-lg hover:bg-purple-200 transition" data-policy-id="policy-senior">Agregar al Carrito</button>
-            <button class="buy-now-btn bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-700 transition" data-policy-id="policy-senior">Comprar Ahora</button>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-purple-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-purple-700 transition" data-policy-id="policy-senior">Agregar al Carrito</button>
         </div>
     </div>
     
@@ -226,9 +277,8 @@
                 </ul>
             </div>
         </div>
-        <div class="mt-12 flex space-x-4">
-            <button class="add-to-cart-btn bg-amber-100 text-amber-800 font-semibold py-3 px-6 rounded-lg hover:bg-amber-200 transition" data-policy-id="policy-investment">Agregar al Carrito</button>
-            <button class="buy-now-btn bg-amber-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-amber-700 transition" data-policy-id="policy-investment">Comprar Ahora</button>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-amber-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-amber-700 transition" data-policy-id="policy-investment">Agregar al Carrito</button>
         </div>
     </div>
     
@@ -250,10 +300,79 @@
                 </ul>
             </div>
         </div>
-        <div class="mt-12 flex space-x-4">
-            <button class="add-to-cart-btn bg-red-100 text-red-800 font-semibold py-3 px-6 rounded-lg hover:bg-red-200 transition" data-policy-id="policy-critical">Agregar al Carrito</button>
-            <button class="buy-now-btn bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 transition" data-policy-id="policy-critical">Comprar Ahora</button>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-red-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-red-700 transition" data-policy-id="policy-critical">Agregar al Carrito</button>
         </div>
+    </div>
+
+    <div id="details-policy-auto-civil" class="view container mx-auto px-6 py-16">
+        <button class="back-to-main mb-8 text-slate-600 font-semibold">&larr; Volver a las pólizas</button>
+        <h1 class="text-4xl font-bold text-slate-800">Seguro RC Básico</h1>
+        <p class="text-xl text-gray-600 mt-2">La cobertura esencial para tu tranquilidad en el camino.</p>
+        <div class="mt-8 grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Descripción Completa</h2>
+                <p class="text-gray-700 leading-relaxed">El Seguro de Responsabilidad Civil (RC) es la protección fundamental que todo conductor necesita. Cubre los daños materiales y personales que puedas ocasionar a terceros con tu vehículo, asegurando que un accidente no se convierta en un problema financiero mayor.</p>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Beneficios Clave</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Cumplimiento Legal:</strong> Satisface el requisito legal de seguro obligatorio en la mayoría de los lugares.</span></li>
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Protección Financiera:</strong> Cubre indemnizaciones por daños a otros vehículos o propiedades.</span></li>
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Asistencia Legal:</strong> Te respaldamos con defensa jurídica en caso de un proceso legal derivado de un accidente.</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-slate-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-slate-700 transition" data-policy-id="policy-auto-civil">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div id="details-policy-auto-limited" class="view container mx-auto px-6 py-16">
+        <button class="back-to-main mb-8 text-sky-600 font-semibold">&larr; Volver a las pólizas</button>
+        <h1 class="text-4xl font-bold text-sky-800">Cobertura Limitada</h1>
+        <p class="text-xl text-gray-600 mt-2">El balance perfecto entre protección y precio.</p>
+        <div class="mt-8 grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Descripción Completa</h2>
+                <p class="text-gray-700 leading-relaxed">Esta cobertura es ideal para quienes buscan más que lo básico. Además de cubrir los daños a terceros, protege tu inversión ante uno de los riesgos más comunes: el robo total de tu vehículo. Es la opción inteligente para una mayor seguridad sin un costo elevado.</p>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Beneficios Clave</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Protección Contra Robo:</strong> Te indemnizamos por el valor comercial de tu auto en caso de robo total.</span></li>
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Responsabilidad Civil:</strong> Incluye toda la protección del seguro RC Básico.</span></li>
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Asistencia en Carretera:</strong> Servicio de grúa, cambio de llanta y más, disponible 24/7.</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-sky-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-sky-700 transition" data-policy-id="policy-auto-limited">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div id="details-policy-auto-full" class="view container mx-auto px-6 py-16">
+        <button class="back-to-main mb-8 text-green-600 font-semibold">&larr; Volver a las pólizas</button>
+        <h1 class="text-4xl font-bold text-green-800">Cobertura Amplia</h1>
+        <p class="text-xl text-gray-600 mt-2">La máxima protección para tu vehículo y para ti.</p>
+        <div class="mt-8 grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Descripción Completa</h2>
+                <p class="text-gray-700 leading-relaxed">Nuestra cobertura más completa. Protege tu auto contra prácticamente todo: daños materiales por colisión, robo total, daños a terceros, y además, cubre los gastos médicos de los ocupantes. Conduce con la certeza de que estás preparado para cualquier imprevisto.</p>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Beneficios Clave</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Daños Materiales:</strong> Cubre los costos de reparación de tu auto en caso de choque, vuelco o desastres naturales.</span></li>
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Gastos Médicos a Ocupantes:</strong> Paga los costos de hospitalización y atención médica para ti y tus acompañantes.</span></li>
+                    <li class="flex items-start"><svg class="w-6 h-6 mr-2 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><strong class="font-semibold">Auto Sustituto:</strong> Te proporcionamos un vehículo mientras el tuyo está en reparación.</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12">
+            <button class="add-to-cart-btn bg-green-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-green-700 transition" data-policy-id="policy-auto-full">Agregar al Carrito</button>
+        </div>
+    </div>
     </div>
 
 
@@ -339,6 +458,7 @@
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             let recognition;
             let isListening = false;
+            let conversationActive = false; // Controla el ciclo de escucha continua
             
             if (SpeechRecognition) {
                 recognition = new SpeechRecognition();
@@ -355,7 +475,10 @@
                 { id: 'policy-individual', name: 'Póliza Individual Futuro', price: 25, keywords: ['individual', 'joven', 'soltero', 'ahorro', 'futuro', 'personal', 'mis metas'], description: 'es una inversión inteligente que combina protección con ahorro', benefits: ['ideal para tus metas a largo plazo', 'flexible y asequible', 'acumula valor con el tiempo'] },
                 { id: 'policy-senior', name: 'Póliza Legado Dorado', price: 60, keywords: ['legado', 'mayor', 'jubilación', 'retiro', 'herencia', 'senior'], description: 'está diseñada para asegurar tu legado y proteger a tu familia de cargas financieras', benefits: ['cubre gastos finales', 'planificación de herencia sencilla', 'protección vitalicia'] },
                 { id: 'policy-investment', name: 'Póliza Inversión Plus', price: 100, keywords: ['inversión', 'invertir', 'crecimiento', 'dinero', 'rendimiento'], description: 'es un vehículo de inversión que busca un crecimiento de capital superior', benefits: ['alto potencial de crecimiento', 'beneficios fiscales', 'protección base de vida'] },
-                { id: 'policy-critical', name: 'Póliza Cobertura Crítica', price: 35, keywords: ['enfermedad', 'crítica', 'cáncer', 'infarto', 'salud', 'apoyo'], description: 'te entrega un pago único al ser diagnosticado con una enfermedad grave', benefits: ['pago único y rápido', 'libre disponibilidad del dinero', 'complemento a tu seguro de salud'] }
+                { id: 'policy-critical', name: 'Póliza Cobertura Crítica', price: 35, keywords: ['enfermedad', 'crítica', 'cáncer', 'infarto', 'salud', 'apoyo'], description: 'te entrega un pago único al ser diagnosticado con una enfermedad grave', benefits: ['pago único y rápido', 'libre disponibilidad del dinero', 'complemento a tu seguro de salud'] },
+                { id: 'policy-auto-civil', name: 'Seguro RC Básico', price: 15, keywords: ['auto', 'coche', 'vehículo', 'responsabilidad civil', 'básico', 'obligatorio', 'terceros'], description: 'es la cobertura esencial para cumplir con la ley y proteger a terceros de daños que puedas ocasionar', benefits: ['cumplimiento legal', 'protección económica ante reclamos', 'asistencia legal básica'] },
+                { id: 'policy-auto-limited', name: 'Cobertura Limitada de Auto', price: 28, keywords: ['auto', 'coche', 'vehículo', 'limitada', 'robo'], description: 'te protege contra robo total del vehículo y cubre los daños a terceros', benefits: ['protección contra robo', 'cubre daños a otros vehículos', 'asistencia en carretera'] },
+                { id: 'policy-auto-full', name: 'Cobertura Amplia de Auto', price: 50, keywords: ['auto', 'coche', 'vehículo', 'amplia', 'todo riesgo', 'choque'], description: 'es la máxima tranquilidad al volante, cubriendo daños a tu propio auto, robo total y daños a terceros', benefits: ['cubre colisiones y volcaduras', 'protección total contra robo', 'gastos médicos a ocupantes'] },
             ];
             let cart = [];
             let conversationHistory = [];
@@ -367,17 +490,23 @@
             };
             let finalTranscript = '';
             let initialGreetingSpoken = false;
+            let proactiveTimer = null;
 
             // --- Funciones de Navegación y UI ---
             const showView = (viewId) => {
-                views.forEach(view => view.classList.remove('active'));
-                const targetView = document.getElementById(viewId);
-                if(targetView) {
-                    targetView.classList.add('active');
-                    window.scrollTo(0, 0);
-                } else {
-                    mainView.classList.add('active');
+                const activeView = document.querySelector('.view.active');
+                if (activeView) {
+                    activeView.classList.remove('active');
                 }
+                setTimeout(() => {
+                    const targetView = document.getElementById(viewId);
+                     if(targetView) {
+                        targetView.classList.add('active');
+                        window.scrollTo(0, 0);
+                    } else {
+                        mainView.classList.add('active');
+                    }
+                }, 200); // Small delay to allow fade out
             };
             
             const updateCartUI = () => {
@@ -427,6 +556,7 @@
 
             // --- Lógica de la IA ---
             const speak = (text, callback) => {
+                if(isListening) recognition.stop(); // Detener la escucha antes de hablar
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'es-ES';
@@ -438,7 +568,7 @@
 
             const getApiResponse = async (userPrompt) => {
                 messageText.textContent = "Pensando...";
-                const apiKey = window.API_KEY;
+                const apiKey = ""; // No se necesita clave aquí
 
                 const systemPrompt = `Eres 'Vida', un asistente de seguros amigable y experto para 'Vida Segura'. Tu objetivo es ayudar a los usuarios a encontrar la póliza perfecta. Eres cálido, empático y claro. Debes responder ÚNICAMENTE con un objeto JSON que coincida con el esquema proporcionado. No incluyas ninguna otra palabra o explicación fuera del JSON.
 
@@ -451,12 +581,14 @@
                 Reglas de Acción:
                 - Si el usuario pide detalles, la intención es GET_DETAILS.
                 - Si pide volver al inicio, la intención es NAVIGATE_HOME.
-                - Si pide comprar o agregar al carrito, la intención es ADD_TO_CART.
+                - Si pide "agregar al carrito", la intención es ADD_TO_CART (sin confirmación).
+                - Si pide "comprar", la intención es INITIATE_PURCHASE (pide confirmación para pagar).
                 - Si pide pagar o procesar pago, la intención es PROCESS_PAYMENT.
                 - Si pide una recomendación, la intención es RECOMMEND.
                 - Si pregunta por la más barata/cara o solo menciona una póliza, la intención es SHOW_POLICY_SUMMARY.
-                - Si confirma una compra, es CONFIRM_PURCHASE. Si la niega, es CANCEL_PURCHASE.
+                - Si confirma un pago (sí, correcto, confirmo, acepto, procede, dale), es CONFIRM_PURCHASE. Si lo niega, es CANCEL_PURCHASE.
                 - Si confirma que quiere detalles, es GET_DETAILS.
+                - Si hace una pregunta general (qué es un deducible, qué es un seguro), la intención es GENERAL_KNOWLEDGE.
                 `;
 
                 const payload = {
@@ -471,7 +603,7 @@
                         responseSchema: {
                             type: "OBJECT",
                             properties: {
-                                intent: { type: "STRING", enum: ["RECOMMEND", "GET_DETAILS", "ADD_TO_CART", "SHOW_POLICY_SUMMARY", "PROCESS_PAYMENT", "NAVIGATE_HOME", "GREETING", "CONFIRM_PURCHASE", "CANCEL_PURCHASE", "UNKNOWN"] },
+                                intent: { type: "STRING", enum: ["RECOMMEND", "GET_DETAILS", "ADD_TO_CART", "SHOW_POLICY_SUMMARY", "INITIATE_PURCHASE", "PROCESS_PAYMENT", "NAVIGATE_HOME", "GREETING", "CONFIRM_PURCHASE", "CANCEL_PURCHASE", "GENERAL_KNOWLEDGE", "UNKNOWN"] },
                                 policyId: { type: "STRING", description: "El ID de la póliza mencionada, si aplica. Ej: 'policy-family'" },
                                 speechResponse: { type: "STRING", description: "La respuesta exacta que debo decir en voz alta." },
                                 thought: { type: "STRING", description: "Mi razonamiento para esta respuesta." }
@@ -510,9 +642,9 @@
                 if (!transcript) return;
                 
                 if (conversationState.isWaitingForPurchaseConfirmation) {
-                    transcript = (transcript.toLowerCase().includes('sí') || transcript.toLowerCase().includes('confirmo')) ? "confirmar compra" : "cancelar compra";
+                    transcript = `Respuesta a confirmación de compra: ${transcript}`;
                 } else if (conversationState.isWaitingForDetailsConfirmation) {
-                     transcript = (transcript.toLowerCase().includes('sí') || transcript.toLowerCase().includes('claro')) ? `dame detalles de ${conversationState.policyIdToConfirmDetails}` : "no quiero detalles";
+                     transcript = `Respuesta a confirmación de detalles para ${conversationState.policyIdToConfirmDetails}: ${transcript}`;
                 }
 
                 const aiResponse = await getApiResponse(transcript);
@@ -524,16 +656,16 @@
                 const wasWaitingForPurchase = conversationState.isWaitingForPurchaseConfirmation;
                 const policyPendingPurchase = conversationState.policyToConfirmPurchase;
 
+                // Resetear estados de espera
                 conversationState.isWaitingForDetailsConfirmation = false;
                 conversationState.isWaitingForPurchaseConfirmation = false;
-                conversationState.policyToConfirmPurchase = null;
                 conversationState.policyIdToConfirmDetails = null;
-
 
                 switch (intent) {
                     case 'RECOMMEND':
                     case 'GREETING':
-                        speak(speechResponse);
+                    case 'GENERAL_KNOWLEDGE':
+                        speak(speechResponse, () => { if (conversationActive) recognition.start(); });
                         break;
                     case 'SHOW_POLICY_SUMMARY':
                         conversationState.isWaitingForDetailsConfirmation = true;
@@ -544,36 +676,60 @@
                             if (policyCard) {
                                 policyCard.classList.remove('zoomed-in');
                             }
+                            if (conversationActive) recognition.start();
                         });
                         break;
                     case 'GET_DETAILS':
                         showView(`details-${policyId}`);
-                        speak(speechResponse);
+                        speak(speechResponse, () => { if (conversationActive) recognition.start(); });
                         break;
                     case 'NAVIGATE_HOME':
                         showView('main-view');
-                        speak(speechResponse);
+                        speak(speechResponse, () => { if (conversationActive) recognition.start(); });
                         break;
                     case 'ADD_TO_CART':
+                        const policyToAdd = policies.find(p => p.id === policyId);
+                        if (policyToAdd && !cart.find(item => item.id === policyId)) {
+                            cart.push(policyToAdd);
+                            updateCartUI();
+                        }
+                        speak(speechResponse, () => { if (conversationActive) recognition.start(); });
+                        break;
+                    case 'INITIATE_PURCHASE':
+                        const policyToBuy = policies.find(p => p.id === policyId);
+                        if (policyToBuy && !cart.find(item => item.id === policyId)) {
+                            cart.push(policyToBuy);
+                            updateCartUI();
+                        }
                         conversationState.isWaitingForPurchaseConfirmation = true;
-                        conversationState.policyToConfirmPurchase = policies.find(p => p.id === policyId);
-                        speak(speechResponse);
+                        conversationState.policyToConfirmPurchase = policyToBuy;
+                        speak(speechResponse, () => { if (conversationActive) recognition.start(); });
                         break;
                     case 'CONFIRM_PURCHASE':
                         if (wasWaitingForPurchase && policyPendingPurchase) {
-                           cart.push(policyPendingPurchase);
-                           updateCartUI();
-                           speak(speechResponse);
+                           speak(speechResponse, () => {
+                               simulatePayment();
+                           });
+                        } else if (cart.length > 0) {
+                           speak(speechResponse, () => {
+                               simulatePayment();
+                           });
+                        } else {
+                           speak("Claro, pero primero necesitas agregar algo al carrito.", () => { if (conversationActive) recognition.start(); });
                         }
+                        conversationState.policyToConfirmPurchase = null;
                         break;
                     case 'CANCEL_PURCHASE':
-                        speak(speechResponse);
+                        speak(speechResponse, () => { if (conversationActive) recognition.start(); });
+                        conversationState.policyToConfirmPurchase = null;
                         break;
                     case 'PROCESS_PAYMENT':
-                        speak(speechResponse, simulatePayment);
+                        speak(speechResponse, () => {
+                            simulatePayment();
+                        });
                         break;
                     default: // UNKNOWN
-                        speak(speechResponse || "Lo siento, no he entendido bien. ¿Puedes repetirlo?");
+                        speak(speechResponse || "Lo siento, no he entendido bien. ¿Puedes repetirlo?", () => { if (conversationActive) recognition.start(); });
                         break;
                 }
             };
@@ -617,6 +773,8 @@
             closePaymentSuccessButton.addEventListener('click', () => {
                 paymentModal.classList.add('hidden');
                 paymentModal.classList.remove('flex');
+                speak("Ha sido un placer ayudarte. ¡Que tengas un buen día!");
+                conversationActive = false;
             });
             
             cartItemsContainer.addEventListener('click', (e) => {
@@ -641,28 +799,31 @@
                 });
             });
 
-            document.querySelectorAll('.buy-now-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const policyId = e.target.dataset.policyId;
-                    const policy = policies.find(p => p.id === policyId);
-                    if (policy && !cart.find(item => item.id === policyId)) {
-                        cart.push(policy);
-                        updateCartUI();
-                    }
-                    simulatePayment();
-                });
-            });
-
             micButton.addEventListener('click', () => {
                 if (!recognition) return;
-                isListening ? recognition.stop() : recognition.start();
+                if (isListening) {
+                    conversationActive = false;
+                    recognition.stop();
+                } else {
+                    conversationActive = true;
+                    recognition.start();
+                }
             });
 
             if (recognition) {
                 recognition.onstart = () => { isListening = true; micButton.classList.add('is-listening'); messageBubble.classList.remove('hidden'); messageText.textContent = "Escuchando..."; };
                 recognition.onresult = (event) => { finalTranscript = event.results[0][0].transcript; };
                 recognition.onend = () => { isListening = false; micButton.classList.remove('is-listening'); if (finalTranscript) processSpeech(finalTranscript); };
-                recognition.onerror = (event) => { isListening = false; micButton.classList.remove('is-listening'); if (event.error !== 'no-speech' && event.error !== 'aborted') { console.error("Error:", event.error); speak("Hubo un error al escucharte."); }};
+                recognition.onerror = (event) => { 
+                    isListening = false; 
+                    micButton.classList.remove('is-listening'); 
+                    if (event.error !== 'no-speech' && event.error !== 'aborted') { 
+                        console.error("Error:", event.error); 
+                        speak("Hubo un error al escucharte.", () => { if (conversationActive) recognition.start(); });
+                    } else if (conversationActive) {
+                        recognition.start(); // Reinicia si se detuvo por silencio pero la conversación sigue activa
+                    }
+                };
             }
 
             window.addEventListener('load', () => {
@@ -672,7 +833,7 @@
                     if (!initialGreetingSpoken) {
                         setTimeout(() => {
                             messageBubble.classList.remove('hidden');
-                            speak("Hola, soy Vida, tu asistente de seguros. ¿Cómo puedo ayudarte hoy?");
+                            speak("Hola, soy Vida. Si necesitas ayuda, presiona el botón del micrófono.");
                             initialGreetingSpoken = true;
                         }, 500);
                     }
