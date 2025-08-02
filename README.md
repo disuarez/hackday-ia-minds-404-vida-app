@@ -16,10 +16,11 @@ Este proyecto permite a los usuarios explorar diferentes pólizas de seguro de v
 
 ## Uso
 
-1. Clona el repositorio y abre `index.html` en tu navegador.
-2. Explora las pólizas disponibles.
-3. Usa el asistente de voz (botón de micrófono) para recibir recomendaciones o ayuda.
-4. Agrega pólizas al carrito y simula el proceso de compra.
+1. Clona el repositorio.
+2. Abre `public/index.html` en tu navegador web.
+3. Explora las pólizas de vida y auto disponibles.
+4. Usa el asistente de voz (botón de micrófono) para recibir recomendaciones, información y ayuda personalizada.
+5. Agrega pólizas al carrito y simula el proceso de compra desde la interfaz.
 
 ## Requisitos
 
@@ -28,8 +29,14 @@ Este proyecto permite a los usuarios explorar diferentes pólizas de seguro de v
 
 ## Estructura
 
-- `index.html`: Página principal con toda la lógica y UI.
-- `.gitignore`: Excluye archivos innecesarios del repositorio.
+```
+public/
+  index.html        # Página principal con la UI y lógica del frontend
+api/
+  gemini.js         # Función serverless para conectar con la API de Gemini
+.gitignore          # Excluye archivos innecesarios del repositorio
+README.md           # Documentación del proyecto
+```
 
 ## Créditos
 
