@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error("Error al llamar a la API de Gemini:", error);
-            return { intent: "UNKNOWN", speechResponse: "Lo siento, estoy teniendo problemas para conectarme. Por favor, inténtalo de nuevo más tarde." };
+            return { intent: "UNKNOWN", speechResponse: "Lo siento, estoy teniendo problemas para conectarme. Por favor, inténtalo más tarde." };
         }
     };
 
