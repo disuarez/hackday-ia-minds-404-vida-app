@@ -1,4 +1,4 @@
-# Seguros Vida Segura
+# Seguros "Vida Segura"
 
 Aplicación web para la venta y recomendación de pólizas de vida, con asistente inteligente por voz.
 
