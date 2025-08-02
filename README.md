@@ -9,15 +9,16 @@ Este proyecto permite a los usuarios explorar diferentes pólizas de seguro de v
 ## Características principales
 
 - **Visualización de pólizas**: Muestra tarjetas con detalles y beneficios de cada póliza.
-- **Carrito de compras**: Permite agregar, quitar y comprar pólizas.
-- **Simulación de pago**: Modal interactivo para finalizar la compra.
+- **Carrito de compras**: Permite agregar, quitar y comprar pólizas, con animaciones y actualizaciones en tiempo real.
+- **Simulación de pago**: Modal interactivo para finalizar la compra, con generación de resumen personalizado por IA.
 - **Asistente IA por voz avanzado**:
-  - Recomienda pólizas, responde preguntas y guía al usuario usando reconocimiento y síntesis de voz.
-  - Detecta el contexto de la póliza activa (la que el usuario está viendo) para respuestas más precisas.
-  - Permite llenar el formulario de compra por voz, extrayendo nombre, fecha de nacimiento y correo electrónico directamente de la conversación.
-  - Genera un resumen personalizado y cálido tras la compra, usando IA.
-  - Mejora la interacción con historial de conversación y acciones inteligentes (agregar/quitar/cambiar pólizas, navegación, etc).
-- **Interfaz moderna**: Utiliza TailwindCSS y diseño responsivo.
+  - Reconocimiento y síntesis de voz integrados, activados por el usuario mediante el micrófono.
+  - Captura y procesamiento de la voz del usuario, con gestión automática del micrófono y temporizador de inactividad.
+  - Contexto dinámico: la IA recibe información sobre la póliza activa y el historial de conversación para respuestas precisas y personalizadas.
+  - Llenado de formulario por voz: el asistente guía al usuario paso a paso, extrayendo nombre, fecha de nacimiento y correo electrónico directamente de la conversación.
+  - Acciones inteligentes: agregar, quitar, cambiar pólizas, navegación entre vistas, recomendaciones y explicaciones de términos de seguros.
+  - Interacción fluida: el asistente responde y reactiva el micrófono según el flujo conversacional, mejorando la experiencia.
+- **Interfaz moderna y responsiva**: Utiliza TailwindCSS, animaciones y diseño adaptable para una experiencia atractiva en cualquier dispositivo.
 
 ## Uso y despliegue local
 

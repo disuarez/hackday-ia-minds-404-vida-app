@@ -30,12 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let conversationActive = false;
     let micTimeout; // NUEVO: Para manejar el apagado automático del micrófono
 
+    // --- Inicialización de reconocimiento de voz ---
     if (SpeechRecognition) {
+        // Si el navegador soporta SpeechRecognition, lo inicializamos
         recognition = new SpeechRecognition();
-        recognition.lang = 'es-ES';
-        recognition.continuous = false;
-        recognition.interimResults = false;
+        recognition.lang = 'es-ES'; // Español de España
+        recognition.continuous = false; // Solo una frase por activación
+        recognition.interimResults = false; // No mostrar resultados intermedios
     } else {
+        // Si no está disponible, ocultamos el botón de micrófono
         micButton.style.display = 'none';
     }
 
@@ -189,11 +192,23 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const getApiResponse = async (userPrompt) => {
+
         messageText.textContent = "Pensando...";
 
+        // Obtener el contexto actual de la vista de póliza activa
         const currentPolicyId = getCurrentViewedPolicyId();
+        // Si el usuario está viendo una póliza específica, se le informa a la IA para que pueda responder con mayor precisión sobre "esta póliza"
         const contextMessage = currentPolicyId ? `El usuario está viendo la página de detalles de la póliza con ID: '${currentPolicyId}'. Si pregunta 'esta póliza' o algo similar, se refiere a ella.` : '';
 
+        /*
+         * systemPrompt: Instrucciones completas para el asistente IA
+         * - Se le proporciona la base de conocimiento de todas las pólizas disponibles
+         * - Se le envía el historial de la conversación para mantener contexto y coherencia
+         * - Se le indica el contexto actual (póliza activa) para respuestas contextuales
+         * - Se definen reglas de acción para que la IA identifique la intención del usuario
+         *   y actúe en consecuencia (ej: compra, recomendación, explicación de términos, etc.)
+         * - Se exige que la respuesta sea únicamente un objeto JSON para facilitar el procesamiento
+         */
         const systemPrompt = `Eres 'Vida', un asistente de seguros amigable y experto para 'Vida Segura'. Tu objetivo es ayudar a los usuarios a encontrar la póliza perfecta y facilitar la compra. Eres cálido, empático y claro. Debes responder ÚNICAMENTE con un objeto JSON. No incluyas texto fuera del JSON.
 
                 Base de conocimiento de las pólizas:
@@ -276,21 +291,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const processSpeech = async (transcript) => {
+
+        // --- FLUJO DE CAPTURA Y PROCESAMIENTO DE VOZ ---
+        // Esta función se llama cuando el usuario termina de hablar por el micrófono
+        // El parámetro 'transcript' contiene el texto reconocido por el sistema de voz
         if (!transcript) return;
 
+        // Si el usuario está llenando el formulario por voz, se le indica a la IA el campo actual
         let userPrompt = transcript;
         if (conversationState.isFillingForm) {
             userPrompt = `El usuario está llenando el campo '${conversationState.nextFieldToFill}' y dice: "${transcript}"`;
         }
 
+        // Se envía el texto reconocido a la IA para obtener la intención y respuesta
         const aiResponse = await getApiResponse(userPrompt);
         console.log("Respuesta de la IA:", aiResponse);
+        // Se guarda el intercambio en el historial de conversación para mantener contexto
         conversationHistory.push({ user: transcript, assistant: aiResponse.speechResponse });
 
+        // Se extraen los datos relevantes de la respuesta de la IA
         const { intent, policyIds, speechResponse, fullName, birthDate, email } = aiResponse;
         const policyId = policyIds && policyIds.length > 0 ? policyIds[0] : null;
 
-        // --- MODIFICADO: Flujo de llenado de formulario más directo ---
+        // --- FLUJO DE LLENADO DE FORMULARIO POR VOZ ---
+        // Si la IA detecta que el usuario está proporcionando datos del formulario, se actualizan los campos
         if (conversationState.isFillingForm && intent === 'FILL_FORM_DATA') {
             if (fullName) fullNameInput.value = fullName;
             if (birthDate) birthDateInput.value = birthDate;
@@ -298,6 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let nextPrompt = "";
 
+            // Se determina el siguiente campo a solicitar según el estado actual
             switch (conversationState.nextFieldToFill) {
                 case 'name':
                     if (fullNameInput.value) {
@@ -331,6 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
             }
 
+            // Se reproduce la respuesta y, si el formulario no está completo, se reactiva el micrófono
             speak(nextPrompt, () => {
                 if (conversationState.isFillingForm) {
                     recognition.start();
@@ -445,6 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Event Listeners ---
+    // Navegación principal entre vistas
     document.getElementById('home-link').addEventListener('click', (e) => { e.preventDefault(); showView('main-view'); });
     document.getElementById('about-us-link').addEventListener('click', (e) => { e.preventDefault(); showView('about-us-view'); });
 
@@ -466,15 +493,18 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => showView('main-view'));
     });
 
+    // Abrir modal del carrito al hacer clic en el icono
     cartButton.addEventListener('click', () => {
         updateCartUI();
         cartModal.classList.remove('hidden');
         cartModal.classList.add('flex');
     });
+    // Cerrar modal del carrito
     closeCartButton.addEventListener('click', () => {
         cartModal.classList.add('hidden');
         cartModal.classList.remove('flex');
     });
+    // Permite cerrar el modal haciendo clic fuera del contenido
     cartModal.addEventListener('click', (e) => {
         if (e.target.id === 'cart-modal') {
             cartModal.classList.add('hidden');
@@ -482,6 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Finalizar compra: valida datos y simula el pago
     finalizePurchaseButton.addEventListener('click', () => {
         if (cart.length === 0) {
             speak("Tu carrito está vacío.");
@@ -494,6 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Cerrar modal de pago exitoso y despedida
     closePaymentSuccessButton.addEventListener('click', () => {
         paymentModal.classList.add('hidden');
         paymentModal.classList.remove('flex');
@@ -501,6 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
         speak("Ha sido un placer ayudarte. ¡Que tengas un buen día!");
     });
 
+    // Quitar póliza del carrito desde el resumen
     cartItemsContainer.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
             cart = cart.filter(item => item.id !== e.target.dataset.id);
@@ -508,6 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Agregar póliza al carrito desde botón en la UI
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
             const policyId = e.target.dataset.policyId;
@@ -523,6 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Activar/desactivar el reconocimiento de voz al presionar el micrófono
     micButton.addEventListener('click', () => {
         if (!recognition) return;
 
@@ -537,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- MODIFICADO: Eventos de reconocimiento de voz ---
+    // --- Reconocimiento de voz: gestión de eventos y temporizador de inactividad ---
     if (recognition) {
         recognition.onstart = () => {
             isListening = true;
