@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 - Si quiere volver al inicio, la intención es NAVIGATE_HOME.
                 - Si saluda, la intención es GREETING.
                 - Si se despide, la intención es END_CONVERSATION.
+                - Si hace preguntas sobre términos de seguros (ej: "¿qué es un deducible?", "¿qué significa prima?"), la intención es EXPLAIN_INSURANCE_TERM. Proporciona una explicación clara y sencilla del término.
                 - Si no entiendes, la intención es UNKNOWN.
                 `;
 
@@ -524,13 +525,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     micButton.addEventListener('click', () => {
         if (!recognition) return;
+
         if (isListening) {
             conversationActive = false;
             recognition.stop();
+            messageText.textContent = "Micrófono apagado";
+            messageBubble.classList.remove('hidden');
         } else {
-            if (typeof Tone !== 'undefined' && Tone.context.state !== 'running') {
-                Tone.start();
-            }
             conversationActive = true;
             recognition.start();
         }
