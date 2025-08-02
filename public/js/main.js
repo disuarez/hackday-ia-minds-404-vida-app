@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fullNameInput = document.getElementById('fullName');
     const birthDateInput = document.getElementById('birthDate');
     const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
     const paymentModal = document.getElementById('payment-modal');
     const paymentLoading = document.getElementById('payment-loading');
     const paymentSuccess = document.getElementById('payment-success');
@@ -469,6 +470,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
     };
+
+    emailInput.addEventListener('input', function () {
+        if (emailInput.validity.valid || emailInput.value === '') {
+            emailError.classList.add('hidden');
+        } else {
+            emailError.classList.remove('hidden');
+        }
+    });
 
     // --- Event Listeners ---
     // Navegación principal entre vistas

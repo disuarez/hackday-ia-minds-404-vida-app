@@ -601,9 +601,10 @@
                     </div>
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                        <input type="email" id="email"
+                        <input type="email" id="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                             class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         <p class="mt-1 text-xs text-gray-500">Aquí enviaremos los documentos de tu póliza.</p>
+                        <span id="email-error" class="text-xs text-red-600 hidden">Formato de correo inválido.</span>
                     </div>
                 </div>
             </div>
